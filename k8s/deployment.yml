@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: hello-app
-          image: ashmitdev05/hello-k8s-demo:v1.0.0
-          imagePullPolicy: IfNotPresent
+          image: ghcr.io/ashmit-gupta/k8-test-project:latest
+          imagePullPolicy: Always
           ports:
             - containerPort: 3000
