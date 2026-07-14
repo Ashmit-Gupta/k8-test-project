@@ -1,0 +1,13 @@
+{
+  "name": "k8-hello",
+  "version": "1.0.0",
+  "description": "Small Node.js test app for Kubernetes",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "node --test"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
