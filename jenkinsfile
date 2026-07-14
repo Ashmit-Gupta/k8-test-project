@@ -1,0 +1,109 @@
+pipeline {
+    agent any
+
+    environment {
+        IMAGE_REPO = 'ghcr.io/ashmit-gupta/k8-test-project'
+        // Unique tag per Jenkins build so K8s picks up new code
+        IMAGE_TAG  = "v1.0.${BUILD_NUMBER}"
+        FULL_IMAGE = "${IMAGE_REPO}:${IMAGE_TAG}"
+    }
+
+    stages {
+
+        stage('Checkout') {
+            steps {
+                git branch: 'main',
+                    url: 'https://github.com/Ashmit-Gupta/k8-test-project.git'
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                sh '''
+                    docker build \
+                        -f dockerfile \
+                        -t $FULL_IMAGE \
+                        -t $IMAGE_REPO:latest \
+                        .
+                '''
+            }
+        }
+
+        stage('Login to GHCR') {
+            steps {
+                withCredentials([
+                    usernamePassword(
+                        credentialsId: 'github-token',
+                        usernameVariable: 'GITHUB_USER',
+                        passwordVariable: 'GITHUB_TOKEN'
+                    )
+                ]) {
+                    sh '''
+                        echo "$GITHUB_TOKEN" | docker login ghcr.io \
+                            -u "$GITHUB_USER" \
+                            --password-stdin
+                    '''
+                }
+            }
+        }
+
+        stage('Push Image') {
+            steps {
+                sh '''
+                    docker push $FULL_IMAGE
+                    docker push $IMAGE_REPO:latest
+                '''
+            }
+        }
+
+        stage('Deploy to Kubernetes') {
+            steps {
+                withCredentials([
+                    file(credentialsId: 'kubeconfig', variable: 'KUBECONFIG_FILE')
+                ]) {
+                    sh '''
+                        export KUBECONFIG=$KUBECONFIG_FILE
+
+                        # Point Deployment at this build's tag (not only :latest)
+                        sed -i "s|image: ${IMAGE_REPO}:.*|image: ${FULL_IMAGE}|" k8s/deployment.yml
+                        sed -i "s|imagePullPolicy:.*|imagePullPolicy: IfNotPresent|" k8s/deployment.yml
+
+                        echo "=== deployment.yml (image pin) ==="
+                        grep -A2 'image:' k8s/deployment.yml
+
+                        kubectl get nodes
+                        kubectl apply -f k8s/namespace.yml
+                        kubectl apply -f k8s/deployment.yml
+                        kubectl apply -f k8s/service.yml
+                        kubectl apply -f k8s/ingress.yml
+
+                        # Force pod refresh to the tagged image
+                        kubectl set image deployment/hello-app \
+                            hello-app=$FULL_IMAGE \
+                            -n k8s-demo-namespace
+
+                        kubectl rollout status deployment/hello-app \
+                            -n k8s-demo-namespace \
+                            --timeout=120s
+
+                        kubectl get pods -n k8s-demo-namespace -o wide
+                    '''
+                }
+            }
+        }
+    }
+
+    post {
+        always {
+            sh 'docker logout ghcr.io || true'
+        }
+
+        success {
+            echo "Pipeline OK — deployed ${FULL_IMAGE}"
+        }
+
+        failure {
+            echo 'Pipeline failed!'
+        }
+    }
+}

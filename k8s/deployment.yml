@@ -19,7 +19,8 @@ spec:
         - name: ghcr-secret
       containers:
         - name: hello-app
-          image: ghcr.io/ashmit-gupta/k8-test-project:latest
-          imagePullPolicy: Always
+          # Jenkins overwrites this tag each build: v1.0.${BUILD_NUMBER}
+          image: ghcr.io/ashmit-gupta/k8-test-project:v1.0.0
+          imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 3000
