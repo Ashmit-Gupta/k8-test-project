@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: k8s-demo-namespace
+
+  labels:
+    app: hello-demo
+    environment: learning

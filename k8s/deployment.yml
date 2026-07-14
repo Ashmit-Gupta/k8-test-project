@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-app
+  namespace: k8s-demo-namespace
+  labels:
+    app: hello-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: hello-app
+  template:
+    metadata:
+      labels:
+        app: hello-app
+    spec:
+      containers:
+        - name: hello-app
+          image: ashmitdev05/hello-k8s-demo:v1.0.0
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 3000
