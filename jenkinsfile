@@ -3,9 +3,6 @@ pipeline {
 
     environment {
         IMAGE_REPO = 'ghcr.io/ashmit-gupta/k8-test-project'
-        // Unique tag per Jenkins build so K8s picks up new code
-        IMAGE_TAG  = "v1.0.${BUILD_NUMBER}"
-        FULL_IMAGE = "${IMAGE_REPO}:${IMAGE_TAG}"
     }
 
     stages {
@@ -14,6 +11,13 @@ pipeline {
             steps {
                 git branch: 'main',
                     url: 'https://github.com/Ashmit-Gupta/k8-test-project.git'
+
+                script {
+                    // Immutable tag = short git SHA (ties image to exact commit)
+                    env.IMAGE_TAG  = sh(returnStdout: true, script: 'git rev-parse --short=7 HEAD').trim()
+                    env.FULL_IMAGE = "${env.IMAGE_REPO}:${env.IMAGE_TAG}"
+                    echo "Image: ${env.FULL_IMAGE}"
+                }
             }
         }
 
@@ -64,20 +68,15 @@ pipeline {
                     sh '''
                         export KUBECONFIG=$KUBECONFIG_FILE
 
-                        # Point Deployment at this build's tag (not only :latest)
-                        sed -i "s|image: ${IMAGE_REPO}:.*|image: ${FULL_IMAGE}|" k8s/deployment.yml
-                        sed -i "s|imagePullPolicy:.*|imagePullPolicy: IfNotPresent|" k8s/deployment.yml
-
-                        echo "=== deployment.yml (image pin) ==="
-                        grep -A2 'image:' k8s/deployment.yml
-
                         kubectl get nodes
+
+                        # Leave manifests in Git unchanged (image: ...:latest)
                         kubectl apply -f k8s/namespace.yml
-                        kubectl apply -f k8s/deployment.yml
                         kubectl apply -f k8s/service.yml
                         kubectl apply -f k8s/ingress.yml
+                        kubectl apply -f k8s/deployment.yml
 
-                        # Force pod refresh to the tagged image
+                        # Pin live Deployment to this commit's image tag
                         kubectl set image deployment/hello-app \
                             hello-app=$FULL_IMAGE \
                             -n k8s-demo-namespace

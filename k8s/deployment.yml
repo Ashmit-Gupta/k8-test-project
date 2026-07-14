@@ -19,8 +19,8 @@ spec:
         - name: ghcr-secret
       containers:
         - name: hello-app
-          # Jenkins overwrites this tag each build: v1.0.${BUILD_NUMBER}
-          image: ghcr.io/ashmit-gupta/k8-test-project:v1.0.0
-          imagePullPolicy: IfNotPresent
+          # Kept as :latest in Git; Jenkins pins the live Deploy via kubectl set image
+          image: ghcr.io/ashmit-gupta/k8-test-project:latest
+          imagePullPolicy: Always
           ports:
             - containerPort: 3000
