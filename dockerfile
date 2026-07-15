@@ -13,6 +13,7 @@ ENV NODE_ENV=production
 COPY --from=deps /app/node_modules ./node_modules
 COPY app/package.json ./
 COPY app/index.js ./
+COPY app/public ./public
 
 USER node
 EXPOSE 3000
