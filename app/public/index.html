@@ -4,6 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Ashmit Gupta — DevOps Engineer</title>
+  <link rel="icon" href="/devops-logo.png" type="image/png" />
+  <link rel="apple-touch-icon" href="/devops-logo.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Public+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
@@ -83,6 +85,21 @@
       padding: 2rem 0 3.25rem;
     }
 
+    .brand-lockup {
+      display: flex;
+      align-items: center;
+      gap: clamp(0.85rem, 2.5vw, 1.35rem);
+      animation: rise 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+
+    .brand-logo {
+      width: clamp(3.4rem, 9vw, 5.25rem);
+      height: clamp(3.4rem, 9vw, 5.25rem);
+      flex-shrink: 0;
+      object-fit: cover;
+      border: 1px solid var(--line);
+    }
+
     .brand {
       font-family: "Bricolage Grotesque", sans-serif;
       font-weight: 800;
@@ -90,7 +107,6 @@
       line-height: 0.9;
       letter-spacing: -0.04em;
       text-transform: uppercase;
-      animation: rise 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
     }
 
     .brand span { color: var(--signal); }
@@ -268,7 +284,7 @@
     }
 
     @media (prefers-reduced-motion: reduce) {
-      .hero__media img, .brand, .hero-copy, .actions, .status-dot {
+      .hero__media img, .brand-lockup, .hero-copy, .actions, .status-dot {
         animation: none !important;
       }
       .hero__media img { transform: none; }
@@ -290,7 +306,16 @@
     <div class="hero__grain" aria-hidden="true"></div>
 
     <div class="frame">
-      <p class="brand">Ashmit<span>.</span>devops</p>
+      <div class="brand-lockup">
+        <img
+          class="brand-logo"
+          src="/devops-logo.png"
+          alt="DevOps infinity logo"
+          width="168"
+          height="168"
+        />
+        <p class="brand">Ashmit<span>.</span>devops</p>
+      </div>
       <div class="hero-copy">
         <h1>Hello — welcome. I’m a DevOps Engineer.</h1>
         <p>
