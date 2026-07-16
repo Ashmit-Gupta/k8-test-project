@@ -1,5 +1,6 @@
-import { Link, useParams } from "react-router-dom";
+import { Link, Navigate, useParams } from "react-router-dom";
 import { getProject } from "../data/projects";
+import ArchitectureGallery from "../components/ArchitectureGallery.jsx";
 import "./ProjectDetail.css";
 
 function DetailBlock({ title, items }) {
@@ -31,6 +32,10 @@ export default function ProjectDetail() {
         </div>
       </main>
     );
+  }
+
+  if (slug !== project.slug) {
+    return <Navigate to={`/projects/${project.slug}`} replace />;
   }
 
   return (
@@ -77,6 +82,13 @@ export default function ProjectDetail() {
         <DetailBlock title="What" items={project.what} />
         <DetailBlock title="Why" items={project.why} />
         <DetailBlock title="How" items={project.how} />
+
+        {project.diagrams?.length > 0 && project.diagramFile && (
+          <ArchitectureGallery
+            diagrams={project.diagrams}
+            diagramFile={project.diagramFile}
+          />
+        )}
       </div>
     </main>
   );

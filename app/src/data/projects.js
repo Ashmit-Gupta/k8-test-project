@@ -1,38 +1,56 @@
 export const projects = [
   {
-    slug: "k8-test-project",
-    title: "Kubernetes CI/CD Demo",
-    subtitle: "End-to-end delivery on Kubernetes",
+    slug: "cloud-native-delivery-platform",
+    aliases: ["k8-test-project"],
+    title: "Cloud-Native Application Delivery Platform",
+    subtitle: "Kubernetes platform engineering — CI/CD to production ingress",
     featured: true,
     summary:
-      "A live portfolio platform on Kubernetes — Docker multi-stage builds, Jenkins pipelines with immutable image tags, GHCR, Ingress, and an edge Nginx reverse proxy.",
+      "End-to-end platform engineering on AWS and Kubernetes: immutable container delivery with Jenkins and GHCR, Ingress-based routing, NodePort edge integration, and a multi-node cluster with Calico networking — documented with live architecture diagrams.",
     stack: [
       "Kubernetes",
       "Jenkins",
       "Docker",
       "GHCR",
       "Nginx Ingress",
+      "AWS",
+      "Terraform",
+      "Calico",
       "React",
-      "Node.js",
     ],
     github: "https://github.com/Ashmit-Gupta/k8-test-project",
-    live: "https://test-k8s.ashmit.xyz",
+    live: "https://dev.ashmit.xyz",
+    diagrams: [
+      {
+        id: "detailed-aws",
+        title: "AWS infrastructure topology",
+        description:
+          "VPC, public/private subnets, Nginx edge, NAT, security groups, and cluster EC2 layout across AZs.",
+      },
+      {
+        id: "k8s-workload-arch",
+        title: "Kubernetes workload architecture",
+        description:
+          "NodePort → Ingress Controller → Ingress → ClusterIP Service → Pods across control-plane and worker nodes.",
+      },
+    ],
+    diagramFile: "/architecture/scopify-platform-architecture.drawio",
     what: [
-      "Containerized a frontend portfolio with a multi-stage Docker build (Node build → Nginx serve).",
-      "Automated build → push → deploy with Jenkins: immutable tags from git SHA, not only :latest.",
-      "Deployed to Kubernetes with Namespace, Deployment, Service, and Ingress.",
-      "Routed public traffic through an edge Nginx proxy to the Ingress NodePort with correct Host headers.",
+      "Built a production-style delivery path: multi-stage Docker (Vite/React → Nginx), GHCR, and Jenkins pipelines with immutable git-SHA tags.",
+      "Deployed workloads to a kubeadm cluster with Namespace, Deployment, ClusterIP Service, and Ingress (ingress-nginx).",
+      "Integrated an edge Nginx reverse proxy to the Ingress NodePort (80→32208) with correct Host and forwarding headers.",
+      "Documented the full AWS + Kubernetes topology in interactive architecture diagrams (edge, nodes, objects, CI/CD).",
     ],
     why: [
-      "Recruiters and teams should see a real running system — not just a README.",
-      "Immutable tags avoid stale :latest caches so every commit actually rolls out.",
-      "Practicing production patterns: secrets for GHCR, kubeconfig in CI, and clean GitOps-friendly manifests.",
+      "Demonstrates platform engineering skills recruiters look for: networking, delivery automation, and operational clarity — not only app code.",
+      "Immutable tags and declarative manifests mirror industry CI/CD practice and avoid stale :latest deploys.",
+      "Architecture diagrams make the system reviewable: every node, Service, Ingress rule, and traffic hop is explicit.",
     ],
     how: [
-      "Jenkins checks out main, builds ghcr.io/…:<git-sha> and :latest, pushes to GHCR.",
-      "kubectl apply applies manifests; kubectl set image pins the live Deployment to that SHA.",
-      "Ingress (ingress-nginx) matches host test-k8s.ashmit.xyz → ClusterIP Service → pods on :80/:3000.",
-      "Edge Nginx on the public host proxies HTTPS to the cluster NodePort and forwards Host for routing.",
+      "Jenkins builds and pushes ghcr.io/ashmit-gupta/k8-test-project:<sha>, applies manifests, then kubectl set image to pin the Deployment.",
+      "Ingress matches host (e.g. dev.ashmit.xyz) to hello-service:80 → pod :3000; kube-proxy exposes NodePorts on all nodes.",
+      "Edge Nginx terminates public TLS and proxies to a reachable cluster node NodePort; Calico provides the pod network overlay.",
+      "Diagrams ship with the site (public/architecture) and render live via the diagrams.net viewer on this project page.",
     ],
   },
   {
@@ -97,5 +115,7 @@ export const projects = [
 ];
 
 export function getProject(slug) {
-  return projects.find((p) => p.slug === slug);
+  return projects.find(
+    (p) => p.slug === slug || (p.aliases && p.aliases.includes(slug))
+  );
 }
