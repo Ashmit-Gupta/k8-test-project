@@ -9,7 +9,7 @@ spec:
   ingressClassName: nginx
 
   rules:
-    - host: test-k8s.ashmit.xyz
+    - host: dev.ashmit.xyz
 
       http:
         paths:
