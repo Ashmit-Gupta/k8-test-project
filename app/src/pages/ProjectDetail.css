@@ -1,0 +1,97 @@
+.detail {
+  min-height: 70vh;
+}
+
+.detail__hero {
+  padding: 3rem 0 2.5rem;
+  border-bottom: 1px solid var(--line);
+  background:
+    radial-gradient(ellipse 60% 80% at 80% 0%, rgba(232, 93, 4, 0.1), transparent 50%),
+    var(--ink);
+  animation: rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.detail__inner h1 {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  margin-bottom: 0.85rem;
+}
+
+.detail__back {
+  display: inline-block;
+  color: var(--mist);
+  font-size: 0.9rem;
+  margin-bottom: 1.5rem;
+}
+
+.detail__back:hover {
+  color: var(--foam);
+}
+
+.detail__summary {
+  color: var(--mist);
+  max-width: 40rem;
+  font-size: 1.08rem;
+  margin-bottom: 1.25rem;
+}
+
+.detail__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+  color: var(--mist);
+  font-size: 0.8rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin-bottom: 1.5rem;
+}
+
+.detail__meta span::after {
+  content: "·";
+  margin-left: 1rem;
+  opacity: 0.35;
+}
+
+.detail__meta span:last-child::after {
+  content: none;
+}
+
+.detail__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.detail__body {
+  padding: 3rem 0 4rem;
+  display: grid;
+  gap: 2.25rem;
+  max-width: 40rem;
+  margin-left: auto;
+  margin-right: auto;
+  animation: rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.08s both;
+}
+
+.detail-block h2 {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--signal);
+  margin-bottom: 0.75rem;
+}
+
+.detail-block ul {
+  padding-left: 1.15rem;
+  color: var(--mist);
+  display: grid;
+  gap: 0.55rem;
+}
+
+.detail-block li {
+  font-size: 1.02rem;
+}

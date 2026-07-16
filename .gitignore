@@ -1,0 +1,20 @@
+# Secrets & local-only
+Ashmit_Gupta_Dev_ops_Resume.pdf
+*.pdf
+.env
+.env.*
+
+# Dependencies
+node_modules/
+app/node_modules/
+
+# Build
+app/dist/
+dist/
+
+# OS / IDE
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.log

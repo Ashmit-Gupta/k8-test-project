@@ -1,0 +1,28 @@
+.foot {
+  padding: 2rem 0 2.75rem;
+  border-top: 1px solid var(--line);
+  color: var(--mist);
+  font-size: 0.9rem;
+}
+
+.foot__inner {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.foot__links {
+  display: flex;
+  gap: 1.25rem;
+}
+
+.foot__links a {
+  color: var(--foam);
+  text-underline-offset: 3px;
+}
+
+.foot__links a:hover {
+  text-decoration: underline;
+}

@@ -1,0 +1,51 @@
+.about {
+  background: var(--ink);
+}
+
+.story {
+  display: grid;
+  gap: 1.5rem;
+  max-width: 40rem;
+}
+
+.story article h3 {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--signal);
+  margin-bottom: 0.4rem;
+}
+
+.story article p {
+  color: var(--mist);
+  font-size: 1.02rem;
+}
+
+.edu {
+  margin-top: 2.75rem;
+  padding-top: 1.75rem;
+  border-top: 1px solid var(--line);
+  max-width: 40rem;
+}
+
+.edu h3 {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--signal);
+  margin-bottom: 0.55rem;
+}
+
+.edu p {
+  color: var(--foam);
+}
+
+.edu__meta {
+  color: var(--mist) !important;
+  margin-top: 0.25rem;
+  font-size: 0.95rem;
+}

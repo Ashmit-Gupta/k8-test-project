@@ -1,11 +1,21 @@
 {
-  "name": "k8-hello",
+  "name": "ashmit-portfolio",
+  "private": true,
   "version": "1.0.0",
-  "description": "Small Node.js test app for Kubernetes",
-  "main": "index.js",
+  "type": "module",
   "scripts": {
-    "start": "node index.js",
-    "test": "node --test"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview --host 0.0.0.0 --port 3000"
+  },
+  "dependencies": {
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "react-router-dom": "^7.6.2"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.5.2",
+    "vite": "^6.3.5"
   },
   "engines": {
     "node": ">=18"

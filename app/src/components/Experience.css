@@ -1,0 +1,38 @@
+.exp-list {
+  list-style: none;
+  display: grid;
+  gap: 2rem;
+}
+
+.exp-item__head {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.25rem;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 0.65rem;
+}
+
+.exp-item__head h3 {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.exp-item__head span {
+  color: var(--mist);
+  font-size: 0.9rem;
+}
+
+.exp-item ul {
+  padding-left: 1.1rem;
+  color: var(--mist);
+  display: grid;
+  gap: 0.4rem;
+  max-width: 48rem;
+}
+
+.exp-item li {
+  font-size: 0.98rem;
+}

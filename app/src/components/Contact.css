@@ -1,0 +1,12 @@
+.contact__lead {
+  color: var(--mist);
+  max-width: 36rem;
+  font-size: 1.05rem;
+  margin-bottom: 1.6rem;
+}
+
+.contact__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.85rem;
+}
